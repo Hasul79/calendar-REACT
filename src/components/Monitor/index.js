@@ -25,7 +25,9 @@ const ButtonWrapper = styled('button')`
   border-radius: 4px;
   margin-right:2px;
   color: ${props => props.unPressed ? '#a4a6a9' : '#E6E6E6'};
-`;
+  outline: unset;
+  cursor: pointer;
+  `;
 const TodayButton = styled(ButtonWrapper)`
 	font-weight: bold;
   padding-left:16px;
@@ -33,22 +35,20 @@ const TodayButton = styled(ButtonWrapper)`
 `;
 
 
-
-
-
-
-
-export default function Monitor() {
+export default function Monitor({today,prevHandler,todayHandler,nextHandler}) {
+  
+  
   return (
     <DivWrapper>
       <div>
-        <TitleWrapper>December</TitleWrapper>
-        <TitleWrapper>2022</TitleWrapper>
+        <TitleWrapper>{today.format('MMMM')}</TitleWrapper>
+        <TitleWrapper>{today.format('YYYY')}</TitleWrapper>
       </div>
       <div>
-        <ButtonWrapper> &lt; </ButtonWrapper>
-        <TodayButton>Today</TodayButton>
-        <ButtonWrapper> &gt; </ButtonWrapper>
+      <ButtonWrapper onClick={prevHandler}> &lt; </ButtonWrapper>
+      <TodayButton onClick={todayHandler}>Today</TodayButton>
+      <ButtonWrapper onClick={nextHandler}> &gt; </ButtonWrapper>
+
       </div>
     </DivWrapper>
 
