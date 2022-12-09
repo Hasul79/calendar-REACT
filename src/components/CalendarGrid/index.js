@@ -14,7 +14,7 @@ const CellWrapper = styled.div`
    min-width: 140px;
    min-height: ${props => props.isHeader ? 24  :  80}px;
    background: ${props => props.isWeekend ? "#272829"  :  "#1E1F21" };
-   color: #DDDCDD;
+   color:${props => props.isSelectedMonth ? '#DDDCDD'  : '#555759'}
    `;
 const RowInCell = styled.div`
     display: flex;
@@ -40,7 +40,7 @@ const CurrentDay = styled('div')`
     justify-content: center;
 `;
 
-   export default function CalendarGrid({ startDay }) {
+   export default function CalendarGrid({ startDay, today }) {
 
     const totalDays = 42;
     const day = startDay.clone().subtract(1, 'day');
@@ -48,6 +48,7 @@ const CurrentDay = styled('div')`
     
 
     const isCurrentDay = (day) => moment().isSame(day, 'day');
+    const isSelectedMonth = (day) => today.isSame(day, 'month');
   
     //console.log(isCurrentDay)
 
@@ -55,9 +56,8 @@ const CurrentDay = styled('div')`
     return (
         <>
         <GridWrapper isHeader>
-        
             {[...Array(7)].map((_, i) => (
-            <CellWrapper isHeader>
+            <CellWrapper isHeader  isSelectedMonth>
                 <RowInCell justifyContent={'flex-end'} pr={1}>
                {moment().days(i + 1).format('dddd')}
                </RowInCell> 
@@ -70,6 +70,7 @@ const CurrentDay = styled('div')`
                     <CellWrapper 
                         isWeekend={dayItem.day() === 6 || dayItem.day() === 0} 
                           key={dayItem.unix()}  
+                        isSelectedMonth={isSelectedMonth(dayItem)}
                         >
                            
                         <RowInCell justifyContent={'flex-end'}>
